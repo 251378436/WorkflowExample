@@ -1,3 +1,5 @@
+using Shouldly;
+
 namespace Common.Tests
 {
     public class TestServiceTests
@@ -5,7 +7,9 @@ namespace Common.Tests
         [Fact]
         public void GetName()
         {
-            Test
+            TestService testService = new TestService();
+            var result = testService.GetName();
+            result.ShouldBe(string.Empty);
         }
     }
 }
