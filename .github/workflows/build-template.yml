@@ -40,7 +40,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Step 1 - Echo out a GitHub Actions Secret to the logs
       run: |
-        echo "The GitHub Action Secret will be masked:  ${{ secrets.ACR_USERNAME }} / ${{ secrets.ACR_PASSWORD }} / ! ${{ vars.ACRENDPOINT }} !!"
+        echo "The GitHub Action Secret will be masked: ${{ inputs.imageversion }} /  ${{ secrets.ACR_USERNAME }} / ${{ secrets.ACR_PASSWORD }} / ! ${{ vars.ACRENDPOINT }} !!"
     - name: Test again
       if: ${{ inputs.merge == true }}
       run: dotnet test --no-build --verbosity normal
