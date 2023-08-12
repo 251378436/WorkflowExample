@@ -40,5 +40,5 @@ jobs:
       with:
         context: .
         file: Dockerfile.Server
-        push: false
+        push: ${{ inputs.merge == true }}
         tags: bolong.azurecr.io/demo-workflow-server:v1.0.2
