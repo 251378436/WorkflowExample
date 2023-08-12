@@ -33,3 +33,12 @@ jobs:
     - name: Test again
       if: ${{ inputs.merge == true }}
       run: dotnet test --no-build --verbosity normal
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Docker Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: Dockerfile.Server
+        push: false
+        tags: bolong.azurecr.io/demo-workflow-server:v1.0.2
