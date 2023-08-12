@@ -51,7 +51,7 @@ jobs:
       with:
         registry: ${{ vars.ACRENDPOINT }}
         username: bolong
-        password: $acr_assword
+        password: ${{ secrets.ACR_PASSWORD }}
     - name: Docker Build and push
       uses: docker/build-push-action@v4
       with:
