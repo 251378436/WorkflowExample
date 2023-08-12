@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /tmp
 
 COPY . ./
-RUN dotnet restore ./Server/Server1.csproj
+RUN dotnet restore ./Server/Server.csproj
 RUN dotnet publish ./Server/Server.csproj -c Release --self-contained false -o /app
 
 # final stage/image
