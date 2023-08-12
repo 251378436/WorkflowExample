@@ -13,3 +13,5 @@ jobs:
     with:
       environment: prod
       merge: true
+    secrets:
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}

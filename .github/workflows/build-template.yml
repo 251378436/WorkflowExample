@@ -12,12 +12,15 @@ on:
       merge:
         required: true
         type: boolean
+    secrets:
+      ACR_PASSWORD:
+        required: true
 
 jobs:
   build:
     name: Run dotnet build for env ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    # environment: ${{ inputs.environment }}
+    environment: ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
