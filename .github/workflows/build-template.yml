@@ -12,6 +12,9 @@ on:
       merge:
         required: true
         type: boolean
+      imageversion:
+        required: true
+        type: string
     secrets:
       ACR_USERNAME:
         required: true
@@ -46,9 +49,6 @@ jobs:
     - name: Login to image repository
       if: true
       uses: docker/login-action@v2
-      env: 
-        acr_username: ${{ secrets.ACR_USERNAME }}
-        acr_assword: ${{ secrets.ACR_PASSWORD }}
       with:
         registry: ${{ vars.ACRENDPOINT }}
         username: ${{ secrets.ACR_USERNAME }}
@@ -59,4 +59,4 @@ jobs:
         context: .
         file: Dockerfile.Server
         push: ${{ inputs.merge == true }}
-        tags: ${{ vars.ACRENDPOINT }}/demo-workflow-server:v1.0.2
+        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ inputs.imageversion }}
