@@ -1,4 +1,4 @@
-# WorkflowExample - test
+# WorkflowExample - test1
 
 # build docker image manually
 docker build -f Dockerfile.Server -t demo-workflow-server:v1.0.0 .
