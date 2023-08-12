@@ -9,6 +9,6 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows.yml
+    uses: ./.github/workflows/build-template.yml
     with:
       environment: prod
