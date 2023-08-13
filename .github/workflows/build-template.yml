@@ -43,8 +43,10 @@ jobs:
         commit1: ${GITHUB_SHA}
         commit2: ${GITHUB_SHA::6}
         commit3: $(git rev-parse --short "$GITHUB_SHA")
+        commit4: ${github.event.pull_request.head.sha}
       run: |
         echo "The GitHub Action Secret will be masked: ${{env.commit1}}  / ${{env.commit2}} / ${{env.commit3}}  /  ${{ secrets.ACR_USERNAME }} / ${{ secrets.ACR_PASSWORD }} / ! ${{ vars.ACRENDPOINT }} !!"
+        echo "${{env.commit4}} "
     - name: Test again
       if: ${{ inputs.merge == true }}
       run: dotnet test --no-build --verbosity normal
