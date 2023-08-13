@@ -13,7 +13,6 @@ jobs:
     with:
       environment: prod
       merge: true
-      imageversion: ${GITHUB_SHA::7}
     secrets:
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
