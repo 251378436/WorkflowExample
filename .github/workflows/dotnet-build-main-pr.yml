@@ -13,7 +13,7 @@ jobs:
     with:
       environment: prod
       merge: false
-      imageversion: ${{ date '%s' }}
+      imageversion: $(date +%s)
     secrets:
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
