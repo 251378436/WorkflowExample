@@ -47,7 +47,7 @@ jobs:
         commit4: ${{ github.event.pull_request.head.sha }}
       run: |
         echo "The GitHub Action Secret will be masked: ${{env.commit1}}  / ${{env.commit2}} / ${{env.commit3}}  /  ${{ secrets.ACR_USERNAME }} / ${{ secrets.ACR_PASSWORD }} / ! ${{ vars.ACRENDPOINT }} !!"
-        echo "/ ${{env.commit4}} / ${{env.branchname}}"
+        echo "/ ${{env.commit4}} / ${{env.branchname}} / ${{ inputs.imageversion }}"
     - name: Test again
       if: ${{ inputs.merge == true }}
       run: dotnet test --no-build --verbosity normal
