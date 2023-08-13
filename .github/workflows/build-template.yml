@@ -12,9 +12,6 @@ on:
       merge:
         required: true
         type: boolean
-      imageversion:
-        required: true
-        type: string
     secrets:
       ACR_USERNAME:
         required: true
@@ -38,11 +35,16 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Prepare
+      id: prep
+      run: |
+        TAG=$(echo $GITHUB_SHA | head -c7)
+        echo ::set-output name=tag::${TAG}
     - name: Step 1 - Echo out a GitHub Actions Secret to the logs
       env:
         branchname: ${GITHUB_REF#refs/heads/}
         commit1: ${GITHUB_SHA}
-        commit2: ${GITHUB_SHA::6}
+        commit2: ${GITHUB_SHA::7}
         commit3: $(git rev-parse --short "$GITHUB_SHA")
         commit4: ${{ github.event.pull_request.head.sha }}
       run: |
@@ -61,9 +63,12 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
     - name: Docker Build and push
+      env:
+        branchname: ${GITHUB_REF#refs/heads/}
+        commit1: ${GITHUB_SHA}
       uses: docker/build-push-action@v4
       with:
         context: .
         file: Dockerfile.Server
         push: ${{ inputs.merge == true }}
-        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ inputs.imageversion }}
+        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ steps.prep.outputs.tag }}

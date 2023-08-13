@@ -13,7 +13,6 @@ jobs:
     with:
       environment: prod
       merge: false
-      imageversion: v1.111
     secrets:
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
