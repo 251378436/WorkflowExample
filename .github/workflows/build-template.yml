@@ -66,4 +66,4 @@ jobs:
         context: .
         file: Dockerfile.Server
         push: ${{ inputs.merge == true }}
-        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ inputs.imageversion }}
+        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:"${{ inputs.imageversion }}"
