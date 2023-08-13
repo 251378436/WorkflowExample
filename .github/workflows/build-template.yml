@@ -35,6 +35,11 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Prepare
+      id: prep
+      run: |
+        TAG=$(echo $GITHUB_SHA | head -c7)
+        echo ::set-output name=tag::${TAG}
     - name: Step 1 - Echo out a GitHub Actions Secret to the logs
       env:
         branchname: ${GITHUB_REF#refs/heads/}
@@ -61,10 +66,9 @@ jobs:
       env:
         branchname: ${GITHUB_REF#refs/heads/}
         commit1: ${GITHUB_SHA}
-        commit2: ${GITHUB_SHA::7}
       uses: docker/build-push-action@v4
       with:
         context: .
         file: Dockerfile.Server
         push: ${{ inputs.merge == true }}
-        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{env.commit2}}
+        tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ steps.prep.outputs.tag }}
