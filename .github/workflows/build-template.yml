@@ -35,11 +35,6 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Prepare
-      id: prep
-      run: |
-        TAG=$(echo $GITHUB_SHA | head -c7)
-        echo ::set-output name=tag::${TAG}
     - name: Step 1 - Echo out a GitHub Actions Secret to the logs
       env:
         branchname: ${GITHUB_REF#refs/heads/}
@@ -53,6 +48,23 @@ jobs:
     - name: Test again
       if: ${{ inputs.merge == true }}
       run: dotnet test --no-build --verbosity normal
+
+  docker:
+    name: Run docker build and push for env ${{ inputs.environment }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Prepare
+      id: prep
+      run: |
+        TAG=$(echo $GITHUB_SHA | head -c7)
+        echo ::set-output name=tag::${TAG}
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     - name: Login to image repository
@@ -72,3 +84,4 @@ jobs:
         file: Dockerfile.Server
         push: ${{ inputs.merge == true }}
         tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ steps.prep.outputs.tag }}
+    
