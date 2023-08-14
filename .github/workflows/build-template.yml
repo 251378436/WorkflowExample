@@ -67,7 +67,7 @@ jobs:
     needs: build
     with:
       environment: ${{ inputs.environment }}
-      merge: ${{ inputs.merge }}
+      merge: false
       imagename: ${{ vars.REPONAME }}
     secrets:
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
