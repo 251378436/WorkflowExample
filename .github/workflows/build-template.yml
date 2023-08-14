@@ -51,6 +51,7 @@ jobs:
 
   docker1:
     uses: ./.github/workflows/docker-build-template.yml
+    needs: build
     with:
       environment: ${{ inputs.environment }}
       merge: ${{ inputs.merge }}
