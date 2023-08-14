@@ -9,6 +9,9 @@ on:
       merge:
         required: true
         type: boolean
+      imagename:
+        required: true
+        type: string
     secrets:
       ACR_USERNAME:
         required: true
@@ -17,7 +20,7 @@ on:
 
 jobs:
   docker:
-    name: Run docker build and push for env ${{ inputs.environment }}
+    name: Run docker env ${{ inputs.environment }} - ${{ inputs.imagename }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
@@ -49,4 +52,4 @@ jobs:
           context: .
           file: Dockerfile.Server
           push: ${{ inputs.merge == true }}
-          tags: ${{ vars.ACRENDPOINT }}/${{ vars.REPONAME }}:${{ steps.prep.outputs.tag }}
+          tags: ${{ vars.ACRENDPOINT }}/${{ inputs.imagename }}:${{ steps.prep.outputs.tag }}
